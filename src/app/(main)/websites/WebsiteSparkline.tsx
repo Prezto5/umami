@@ -13,9 +13,9 @@ export function WebsiteSparkline({
   isLoading?: boolean;
 }) {
   const { theme } = useTheme();
-  const { t, labels } = useMessages();
+  const { t, messages } = useMessages();
   const { colors } = useMemo(() => getThemeColors(theme), [theme]);
-  const tooltipLabel = `${total.toLocaleString()} ${t(labels.visitors).toLocaleLowerCase()}`;
+  const tooltipLabel = t(messages.visitorsCount, { count: total, value: total.toLocaleString() });
 
   const points = useMemo(() => {
     if (!values.length) {

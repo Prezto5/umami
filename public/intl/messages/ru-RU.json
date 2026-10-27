@@ -497,6 +497,7 @@
     "replay-min-duration-description": "Показывать только записи не короче этой длительности.",
     "viewed-page": "Просмотренная страница",
     "upgrade-required": "Для этой функции требуется подписка на план {plan}.",
+    "visitors-count": "{count, plural, one {{value} посетитель} few {{value} посетителя} many {{value} посетителей} other {{value} посетителя}}",
     "visitor-log": "Посетитель из <b>{country}</b>: <b>{browser}</b> на <b>{os}</b>, <b>{device}</b>",
     "two-factor-setup-description": "Каждый раз при входе, помимо пароля, вы будете вводить одноразовый код из приложения для аутентификации.",
     "two-factor-setup-required-description": "Для доступа к Umami требуется двухфакторная аутентификация (2FA).",

@@ -490,6 +490,7 @@
     "replay-min-duration-description": "Only show replays at or above this duration.",
     "viewed-page": "Viewed page",
     "upgrade-required": "This feature requires a {plan} plan subscription.",
+    "visitors-count": "{count, plural, one {{value} visitor} other {{value} visitors}}",
     "visitor-log": "Visitor from <b>{country}</b> using <b>{browser}</b> on <b>{os}</b> <b>{device}</b>",
     "two-factor-setup-description": "Each time you log in, in addition to your password, you'll use an authenticator app to generate and use a one-time code.",
     "two-factor-setup-required-description": "Two-factor authentication (2FA) is required to access Umami.",

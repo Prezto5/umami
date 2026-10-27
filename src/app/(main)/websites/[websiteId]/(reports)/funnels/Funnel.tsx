@@ -19,7 +19,7 @@ interface FunnelProps {
 }
 
 export function Funnel({ id, name, type, parameters, websiteId, allowEdit = true }: FunnelProps) {
-  const { t, labels } = useMessages();
+  const { t, labels, messages } = useMessages();
   const { pathname } = useNavigation();
   const isSharePage = pathname.includes('/share/');
   const { data, error, isLoading } = useFunnelQuery({
@@ -122,7 +122,10 @@ export function Funnel({ id, name, type, parameters, websiteId, allowEdit = true
                         <User />
                       </Icon>
                       <Text title={visitors.toString()} transform="lowercase">
-                        {`${formatLongNumber(visitors)} ${t(labels.visitors)}`}
+                        {t(messages.visitorsCount, {
+                          count: visitors,
+                          value: formatLongNumber(visitors),
+                        })}
                       </Text>
                     </Row>
                   </Row>

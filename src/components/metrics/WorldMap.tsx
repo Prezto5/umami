@@ -23,9 +23,8 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
   const { theme } = useTheme();
   const { colors } = getThemeColors(theme);
   const { locale } = useLocale();
-  const { t, labels } = useMessages();
+  const { t, labels, messages } = useMessages();
   const { countryNames } = useCountryNames(locale);
-  const visitorsLabel = t(labels.visitors).toLocaleLowerCase(locale);
   const unknownLabel = t(labels.unknown);
 
   const { data: mapData } = useWebsiteMetricsQuery(websiteId, {
@@ -57,10 +56,13 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
   const handleHover = (code: string) => {
     if (code === 'AQ') return;
     const country = metrics?.find(({ x }) => x === code);
+    const count = country?.y || 0;
+
     setTooltipPopup(
-      `${countryNames[code] || unknownLabel}: ${formatLongNumber(
-        country?.y || 0,
-      )} ${visitorsLabel}` as any,
+      `${countryNames[code] || unknownLabel}: ${t(messages.visitorsCount, {
+        count,
+        value: formatLongNumber(count),
+      })}` as any,
     );
   };
 

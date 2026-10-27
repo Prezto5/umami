@@ -475,6 +475,7 @@ export const messages: Record<string, string> = {
   noMatchPassword: 'message.no-match-password',
   goToSettings: 'message.go-to-settings',
   activeUsers: 'message.active-users',
+  visitorsCount: 'message.visitors-count',
   teamNotFound: 'message.team-not-found',
   visitorLog: 'message.visitor-log',
   eventLog: 'message.event-log',
