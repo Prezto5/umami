@@ -23,8 +23,8 @@ export function HeatmapsPage({ websiteId }: { websiteId: string }) {
   const { hasFeature, cloudMode, isLoading } = useSubscription(website?.teamId);
 
   const buttons = [
-    { id: 'click', label: 'Clicks' },
-    { id: 'scroll', label: 'Scroll' },
+    { id: 'click', label: t(labels.clicks) },
+    { id: 'scroll', label: t(labels.scroll) },
   ];
 
   if (isLoading) {

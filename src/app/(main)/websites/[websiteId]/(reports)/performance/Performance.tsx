@@ -58,9 +58,9 @@ function formatMetricValue(metric: string, value: number): string {
 }
 
 const PERCENTILES = [
-  { id: 'p50', label: 'p50 — Median' },
-  { id: 'p75', label: 'p75 — 75th Percentile' },
-  { id: 'p95', label: 'p95 — 95th Percentile' },
+  { id: 'p50', label: 'percentileP50' },
+  { id: 'p75', label: 'percentileP75' },
+  { id: 'p95', label: 'percentileP95' },
 ] as const;
 
 export function Performance({ websiteId, startDate, endDate, unit }: PerformanceProps) {
@@ -150,13 +150,13 @@ export function Performance({ websiteId, startDate, endDate, unit }: Performance
     <Column gap>
       <Grid columns="280px" gap>
         <Select
-          label="Percentile"
+          label={t(labels.percentile)}
           value={selectedPercentile}
           onChange={value => setSelectedPercentile(value as 'p50' | 'p75' | 'p95')}
         >
           {PERCENTILES.map(({ id, label }) => (
             <ListItem key={id} id={id}>
-              {label}
+              {t(labels[label])}
             </ListItem>
           ))}
         </Select>

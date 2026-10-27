@@ -439,6 +439,14 @@ export const labels: Record<string, string> = {
   lastUsed: 'label.last-used',
   never: 'label.never',
   copy: 'label.copy',
+  clone: 'label.clone',
+  cloneBoard: 'label.clone-board',
+  clicks: 'label.clicks',
+  scroll: 'label.scroll',
+  percentile: 'label.percentile',
+  percentileP50: 'label.percentile-p50',
+  percentileP75: 'label.percentile-p75',
+  percentileP95: 'label.percentile-p95',
 };
 
 export const messages: Record<string, string> = {

@@ -441,7 +441,15 @@
     "never": "Никогда",
     "copy": "Копировать",
     "authorize": "Разрешить",
-    "deny": "Отклонить"
+    "deny": "Отклонить",
+    "clone": "Клонировать",
+    "clone-board": "Клонировать доску",
+    "clicks": "Клики",
+    "scroll": "Прокрутка",
+    "percentile": "Перцентиль",
+    "percentile-p50": "p50 — медиана",
+    "percentile-p75": "p75 — 75-й перцентиль",
+    "percentile-p95": "p95 — 95-й перцентиль"
   },
   "message": {
     "action-confirmation": "Введите {confirmation} в поле ниже, чтобы подтвердить.",

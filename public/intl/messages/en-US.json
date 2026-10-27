@@ -434,7 +434,15 @@
     "never": "Never",
     "copy": "Copy",
     "authorize": "Authorize",
-    "deny": "Deny"
+    "deny": "Deny",
+    "clone": "Clone",
+    "clone-board": "Clone board",
+    "clicks": "Clicks",
+    "scroll": "Scroll",
+    "percentile": "Percentile",
+    "percentile-p50": "p50 — Median",
+    "percentile-p75": "p75 — 75th Percentile",
+    "percentile-p95": "p95 — 95th Percentile"
   },
   "message": {
     "action-confirmation": "Type {confirmation} in the box below to confirm.",
