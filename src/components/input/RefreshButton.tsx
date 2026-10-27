@@ -1,7 +1,16 @@
+import { type Query, useQueryClient } from '@tanstack/react-query';
 import { Icon, LoadingButton, Tooltip, TooltipTrigger } from '@umami/react-zen';
-import { useDateRange, useMessages } from '@/components/hooks';
+import { useState } from 'react';
+import { useMessages } from '@/components/hooks';
 import { RefreshCw } from '@/components/icons';
-import { setWebsiteDateRange } from '@/store/websites';
+
+// Запросы данных сайта: во втором элементе ключа лежит { websiteId, ... },
+// у «Онлайн» (`websites:active`) — сам websiteId.
+export function isWebsiteDataQuery(websiteId: string, { queryKey }: Pick<Query, 'queryKey'>) {
+  const [, params] = queryKey as [unknown, any];
+
+  return params === websiteId || params?.websiteId === websiteId;
+}
 
 export function RefreshButton({
   websiteId,
@@ -11,17 +20,32 @@ export function RefreshButton({
   isLoading?: boolean;
 }) {
   const { t, labels } = useMessages();
-  const { dateRange } = useDateRange();
+  const queryClient = useQueryClient();
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  function handleClick() {
-    if (!isLoading && dateRange) {
-      setWebsiteDateRange(websiteId, dateRange);
+  async function handleClick() {
+    if (isLoading || isRefreshing || !websiteId) {
+      return;
+    }
+
+    setIsRefreshing(true);
+
+    try {
+      await queryClient.invalidateQueries({
+        predicate: query => isWebsiteDataQuery(websiteId, query),
+      });
+    } finally {
+      setIsRefreshing(false);
     }
   }
 
   return (
     <TooltipTrigger>
-      <LoadingButton isLoading={isLoading} onPress={handleClick}>
+      <LoadingButton
+        isLoading={isLoading || isRefreshing}
+        onPress={handleClick}
+        aria-label={t(labels.refresh)}
+      >
         <Icon>
           <RefreshCw />
         </Icon>
