@@ -1,5 +1,5 @@
 import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { useDateRange, useMessages } from '@/components/hooks';
+import { useDateRange, useLocale, useMessages } from '@/components/hooks';
 import { useWebsiteStatsQuery } from '@/components/hooks/queries/useWebsiteStatsQuery';
 import { MetricCard } from '@/components/metrics/MetricCard';
 import { MetricsBar } from '@/components/metrics/MetricsBar';
@@ -15,6 +15,7 @@ export function WebsiteMetricsBar({
 }) {
   const { isAllTime, dateCompare } = useDateRange();
   const { t, labels, getErrorMessage } = useMessages();
+  const { locale } = useLocale();
   const { data, isLoading, isFetching, error } = useWebsiteStatsQuery({
     websiteId,
     compare: compareMode ? dateCompare?.compare : undefined,
@@ -58,7 +59,7 @@ export function WebsiteMetricsBar({
           prev: comparison.totaltime / comparison.visits,
           change: totaltime / visits - comparison.totaltime / comparison.visits,
           formatValue: n =>
-            `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`,
+            `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ', locale)}`,
         },
       ]
     : null;

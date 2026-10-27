@@ -26,21 +26,43 @@ export function formatTime(val: number) {
   return `${h}${m}:${s}`;
 }
 
-export function formatShortTime(val: number, formats = ['m', 's'], space = '') {
+const DURATION_UNITS: Record<string, string> = {
+  d: 'day',
+  h: 'hour',
+  m: 'minute',
+  s: 'second',
+  ms: 'millisecond',
+};
+
+// Unit labels come from the locale data (en-US: 6m 29s, ru-RU: 6 мин 29 с).
+function formatDurationUnit(value: number, format: string, locale: string) {
+  return new Intl.NumberFormat(locale, {
+    style: 'unit',
+    unit: DURATION_UNITS[format],
+    unitDisplay: 'narrow',
+    maximumFractionDigits: 3,
+  }).format(value);
+}
+
+export function formatShortTime(val: number, formats = ['m', 's'], space = '', locale = 'en-US') {
   const { days, hours, minutes, seconds, ms } = parseTime(val);
-  let t = '';
+  const parts: string[] = [];
 
-  if (days > 0 && formats.indexOf('d') !== -1) t += `${days}d${space}`;
-  if (hours > 0 && formats.indexOf('h') !== -1) t += `${hours}h${space}`;
-  if (minutes > 0 && formats.indexOf('m') !== -1) t += `${minutes}m${space}`;
-  if (seconds > 0 && formats.indexOf('s') !== -1) t += `${seconds}s${space}`;
-  if (ms > 0 && formats.indexOf('ms') !== -1) t += `${ms}ms`;
+  if (days > 0 && formats.indexOf('d') !== -1) parts.push(formatDurationUnit(days, 'd', locale));
+  if (hours > 0 && formats.indexOf('h') !== -1) parts.push(formatDurationUnit(hours, 'h', locale));
+  if (minutes > 0 && formats.indexOf('m') !== -1) {
+    parts.push(formatDurationUnit(minutes, 'm', locale));
+  }
+  if (seconds > 0 && formats.indexOf('s') !== -1) {
+    parts.push(formatDurationUnit(seconds, 's', locale));
+  }
+  if (ms > 0 && formats.indexOf('ms') !== -1) parts.push(formatDurationUnit(ms, 'ms', locale));
 
-  if (!t) {
-    return `0${formats[formats.length - 1]}`;
+  if (!parts.length) {
+    return formatDurationUnit(0, formats[formats.length - 1], locale);
   }
 
-  return t;
+  return parts.join(space);
 }
 
 export function formatNumber(n: string | number) {

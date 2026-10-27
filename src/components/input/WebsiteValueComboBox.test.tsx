@@ -38,6 +38,7 @@ vi.mock('@/components/hooks', () => ({
   useMessages: () => ({
     t: (value: string) => value,
     messages: { noResultsFound: 'No results found' },
+    labels: { selectItem: 'Select an item' },
   }),
   useWebsiteValuesQuery: ({ type }: { type: string }) => ({
     data: type === 'path' ? [{ value: '/home' }] : type === 'event' ? [{ value: 'signup' }] : [],

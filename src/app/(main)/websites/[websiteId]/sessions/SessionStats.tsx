@@ -1,10 +1,11 @@
-import { useMessages } from '@/components/hooks';
+import { useLocale, useMessages } from '@/components/hooks';
 import { MetricCard } from '@/components/metrics/MetricCard';
 import { MetricsBar } from '@/components/metrics/MetricsBar';
 import { formatShortTime } from '@/lib/format';
 
 export function SessionStats({ data }) {
   const { t, labels } = useMessages();
+  const { locale } = useLocale();
 
   return (
     <MetricsBar>
@@ -14,7 +15,9 @@ export function SessionStats({ data }) {
       <MetricCard
         label={t(labels.visitDuration)}
         value={data?.totaltime / data?.visits}
-        formatValue={n => `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`}
+        formatValue={n =>
+          `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ', locale)}`
+        }
       />
     </MetricsBar>
   );

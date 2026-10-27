@@ -1,6 +1,6 @@
 import { LoadingPanel } from '@/components/common/LoadingPanel';
 import { OverlayScrollArea } from '@/components/common/OverlayScrollArea';
-import { useMessages, useWebsiteExpandedMetricsQuery } from '@/components/hooks';
+import { useLocale, useMessages, useWebsiteExpandedMetricsQuery } from '@/components/hooks';
 import { X } from '@/components/icons';
 import { DownloadButton } from '@/components/input/DownloadButton';
 import { MetricLabel } from '@/components/metrics/MetricLabel';
@@ -35,6 +35,7 @@ export function MetricsExpandedTable({
 }: MetricsExpandedTableProps) {
   const [search, setSearch] = useState('');
   const { t, labels } = useMessages();
+  const { locale } = useLocale();
   const isType = ['browser', 'country', 'device', 'os'].includes(type);
   const showBounceDuration = SESSION_COLUMNS.includes(type);
 
@@ -128,7 +129,7 @@ export function MetricsExpandedTable({
                   >
                     {row => {
                       const n = row?.totaltime / row?.visits;
-                      return `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`;
+                      return `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ', locale)}`;
                     }}
                   </DataColumn>,
                 ]}

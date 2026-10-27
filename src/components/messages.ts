@@ -139,6 +139,7 @@ export const labels: Record<string, string> = {
   allTime: 'label.all-time',
   customRange: 'label.custom-range',
   selectEvent: 'label.select-event',
+  selectItem: 'label.select-item',
   selectWebsite: 'label.select-website',
   selectLink: 'label.select-link',
   selectPixel: 'label.select-pixel',

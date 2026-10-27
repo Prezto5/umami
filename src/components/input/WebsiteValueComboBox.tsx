@@ -4,8 +4,6 @@ import { ComboBox } from '@/components/common/ComboBox';
 import { Empty } from '@/components/common/Empty';
 import { useMessages, useWebsiteValuesQuery } from '@/components/hooks';
 
-const DEFAULT_PLACEHOLDER = 'Select an item';
-
 export interface WebsiteValueComboBoxProps
   extends Omit<
     ComboBoxProps,
@@ -30,10 +28,10 @@ export function WebsiteValueComboBox({
   onChange,
   label,
   className,
-  placeholder = DEFAULT_PLACEHOLDER,
+  placeholder,
   ...props
 }: WebsiteValueComboBoxProps) {
-  const { t, messages } = useMessages();
+  const { t, messages, labels } = useMessages();
   const [search, setSearch] = useState(value);
   const searchValue = useDebounce(search, 300);
   const primaryQuery = useWebsiteValuesQuery({
@@ -73,7 +71,7 @@ export function WebsiteValueComboBox({
         aria-label={props['aria-label'] ?? label}
         items={items}
         inputValue={value}
-        placeholder={placeholder}
+        placeholder={placeholder ?? t(labels.selectItem)}
         onInputValueChange={value => {
           setSearch(value);
           onChange(value);

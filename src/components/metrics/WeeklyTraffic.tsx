@@ -7,9 +7,14 @@ import { getDayOfWeekAsDate } from '@/lib/date';
 
 export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
   const { data, isLoading, error } = useWeeklyTrafficQuery(websiteId);
-  const { dateLocale } = useLocale();
+  const { locale, dateLocale } = useLocale();
   const { labels, t } = useMessages();
   const { weekStartsOn } = dateLocale.options;
+  // Weekday names and the clock style (12h am/pm or 24h) come from the locale data.
+  const weekdayFormat = new Intl.DateTimeFormat(locale, { weekday: 'short' });
+  const hourPattern = new Intl.DateTimeFormat(locale, { hour: 'numeric' }).resolvedOptions().hour12
+    ? 'haaa'
+    : 'H:mm';
   const daysOfWeek = Array(7)
     .fill(weekStartsOn)
     .map((d, i) => (d + i) % 7);
@@ -44,7 +49,7 @@ export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
             {daysOfWeek.map((index: number) => (
               <Row key={index} alignItems="center" justifyContent="center">
                 <Text weight="bold" align="center">
-                  {format(getDayOfWeekAsDate(index), 'EEE', { locale: dateLocale })}
+                  {weekdayFormat.format(getDayOfWeekAsDate(index))}
                 </Text>
               </Row>
             ))}
@@ -52,7 +57,7 @@ export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
               {Array(24)
                 .fill(null)
                 .map((_, i) => {
-                  const label = format(addHours(startOfDay(new Date()), i), 'haaa', {
+                  const label = format(addHours(startOfDay(new Date()), i), hourPattern, {
                     locale: dateLocale,
                   });
                   return (

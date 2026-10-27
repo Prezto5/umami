@@ -70,7 +70,7 @@ export function HeatmapsPage({ websiteId }: { websiteId: string }) {
                   <SearchField
                     value={search}
                     onSearch={setSearch}
-                    placeholder="Search"
+                    placeholder={t(labels.search)}
                     className="w-full max-w-md"
                   />
                 </Row>
@@ -87,7 +87,7 @@ export function HeatmapsPage({ websiteId }: { websiteId: string }) {
                 <SearchField
                   value={search}
                   onSearch={setSearch}
-                  placeholder="Search"
+                  placeholder={t(labels.search)}
                   className="w-full max-w-md"
                 />
                 <FilterButtons

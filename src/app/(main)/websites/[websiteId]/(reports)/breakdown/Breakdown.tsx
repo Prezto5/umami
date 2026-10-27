@@ -1,6 +1,12 @@
 import { Column, DataColumn, DataTable, Text } from '@umami/react-zen';
 import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { useBreakdownQuery, useFields, useFormat, useMessages } from '@/components/hooks';
+import {
+  useBreakdownQuery,
+  useFields,
+  useFormat,
+  useLocale,
+  useMessages,
+} from '@/components/hooks';
 import { formatShortTime } from '@/lib/format';
 
 export interface BreakdownProps {
@@ -12,6 +18,7 @@ export interface BreakdownProps {
 
 export function Breakdown({ websiteId, selectedFields = [], startDate, endDate }: BreakdownProps) {
   const { t, labels } = useMessages();
+  const { locale } = useLocale();
   const { formatValue } = useFormat();
   const { fields } = useFields();
   const { data, error, isLoading } = useBreakdownQuery(
@@ -65,7 +72,7 @@ export function Breakdown({ websiteId, selectedFields = [], startDate, endDate }
           <DataColumn id="visitDuration" label={t(labels.visitDuration)} align="end" width="120px">
             {row => {
               const n = row?.totaltime / row?.visits;
-              return `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`;
+              return `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ', locale)}`;
             }}
           </DataColumn>
         </DataTable>

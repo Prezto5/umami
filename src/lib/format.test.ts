@@ -19,6 +19,18 @@ test('formatShortTime', () => {
   expect(format.formatShortTime(3600 + 60 + 1)).toBe('1m1s');
 
   expect(format.formatShortTime(3600 + 60 + 1, ['h', 'm', 's'])).toBe('1h1m1s');
+
+  expect(format.formatShortTime(389, ['m', 's'], ' ')).toBe('6m 29s');
+  expect(format.formatShortTime(0)).toBe('0s');
+});
+
+test('formatShortTime uses the unit labels of the locale', () => {
+  // the separator between number and unit depends on the ICU version, so compare with plain spaces
+  const ru = (val: number) =>
+    format.formatShortTime(val, ['m', 's'], ' ', 'ru-RU').replace(/\s/g, ' ');
+
+  expect(ru(389)).toBe('6 мин 29 с');
+  expect(ru(0)).toBe('0 с');
 });
 
 test('formatNumber', () => {
