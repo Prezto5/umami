@@ -3,6 +3,7 @@ import type { ReactQueryOptions } from '@/lib/types';
 import { useApi } from '../useApi';
 import { useDateParameters } from '../useDateParameters';
 import { useFilterParameters } from '../useFilterParameters';
+import { useLiveRefetch } from '../useLiveRefetch';
 
 export type WebsiteExpandedMetricsData = {
   name: string;
@@ -21,6 +22,7 @@ export function useWebsiteExpandedMetricsQuery(
   const { get, useQuery } = useApi();
   const { startAt, endAt } = useDateParameters();
   const filters = useFilterParameters();
+  const refetchInterval = useLiveRefetch();
 
   return useQuery<WebsiteExpandedMetricsData>({
     queryKey: [
@@ -42,6 +44,7 @@ export function useWebsiteExpandedMetricsQuery(
       }),
     enabled: !!websiteId,
     placeholderData: keepPreviousData,
+    refetchInterval,
     ...options,
   });
 }

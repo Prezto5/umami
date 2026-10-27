@@ -3,6 +3,7 @@ import { Column, Row } from '@umami/react-zen';
 import { useState } from 'react';
 import { ExpandedViewModal } from '@/app/(main)/websites/[websiteId]/ExpandedViewModal';
 import { Panel } from '@/components/common/Panel';
+import { LiveRefetchProvider } from '@/components/hooks/useLiveRefetch';
 import { DialogButton } from '@/components/input/DialogButton';
 import { UnitFilter } from '@/components/input/UnitFilter';
 import type { AnnotationRange } from '@/lib/annotations';
@@ -17,41 +18,43 @@ export function WebsitePage({ websiteId }: { websiteId: string }) {
   const [annotationRange, setAnnotationRange] = useState<AnnotationRange | null>(null);
 
   return (
-    <Column gap>
-      <WebsiteControls websiteId={websiteId} allowBounceFilter={true} />
-      <WebsiteMetricsBar websiteId={websiteId} showChange={true} />
-      <Panel minHeight="520px">
-        <Row justifyContent="end">
-          <UnitFilter />
-        </Row>
-        <WebsiteChart
-          websiteId={websiteId}
-          showAnnotations
-          onAnnotationMoreClick={setAnnotationRange}
-          legendActions={<AnnotationsButton websiteId={websiteId} />}
-        />
-      </Panel>
-      <WebsitePanels websiteId={websiteId} />
-      <ExpandedViewModal websiteId={websiteId} />
-      <DialogButton
-        isOpen={!!annotationRange}
-        onOpenChange={isOpen => !isOpen && setAnnotationRange(null)}
-        title={null}
-        width="800px"
-      >
-        {({ close }) =>
-          annotationRange && (
-            <AnnotationsModal
-              websiteId={websiteId}
-              range={annotationRange}
-              onClose={() => {
-                close();
-                setAnnotationRange(null);
-              }}
-            />
-          )
-        }
-      </DialogButton>
-    </Column>
+    <LiveRefetchProvider>
+      <Column gap>
+        <WebsiteControls websiteId={websiteId} allowBounceFilter={true} />
+        <WebsiteMetricsBar websiteId={websiteId} showChange={true} />
+        <Panel minHeight="520px">
+          <Row justifyContent="end">
+            <UnitFilter />
+          </Row>
+          <WebsiteChart
+            websiteId={websiteId}
+            showAnnotations
+            onAnnotationMoreClick={setAnnotationRange}
+            legendActions={<AnnotationsButton websiteId={websiteId} />}
+          />
+        </Panel>
+        <WebsitePanels websiteId={websiteId} />
+        <ExpandedViewModal websiteId={websiteId} />
+        <DialogButton
+          isOpen={!!annotationRange}
+          onOpenChange={isOpen => !isOpen && setAnnotationRange(null)}
+          title={null}
+          width="800px"
+        >
+          {({ close }) =>
+            annotationRange && (
+              <AnnotationsModal
+                websiteId={websiteId}
+                range={annotationRange}
+                onClose={() => {
+                  close();
+                  setAnnotationRange(null);
+                }}
+              />
+            )
+          }
+        </DialogButton>
+      </Column>
+    </LiveRefetchProvider>
   );
 }

@@ -2,6 +2,7 @@ import type { ReactQueryOptions } from '@/lib/types';
 import { useApi } from '../useApi';
 import { useDateParameters } from '../useDateParameters';
 import { useFilterParameters } from '../useFilterParameters';
+import { useLiveRefetch } from '../useLiveRefetch';
 
 export interface WebsitePageviewsData {
   pageviews: { x: string; y: number }[];
@@ -15,6 +16,7 @@ export function useWebsitePageviewsQuery(
   const { get, useQuery } = useApi();
   const { startAt, endAt, unit, timezone } = useDateParameters();
   const queryParams = useFilterParameters();
+  const refetchInterval = useLiveRefetch();
 
   return useQuery<WebsitePageviewsData>({
     queryKey: [
@@ -31,6 +33,7 @@ export function useWebsitePageviewsQuery(
         ...queryParams,
       }),
     enabled: !!websiteId,
+    refetchInterval,
     ...options,
   });
 }

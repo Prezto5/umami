@@ -1,6 +1,7 @@
 import { useFilterParameters } from '@/components/hooks/useFilterParameters';
 import { useApi } from '../useApi';
 import { useDateParameters } from '../useDateParameters';
+import { useLiveRefetch } from '../useLiveRefetch';
 import { useModified } from '../useModified';
 
 export function useWeeklyTrafficQuery(websiteId: string, params?: Record<string, string | number>) {
@@ -8,8 +9,10 @@ export function useWeeklyTrafficQuery(websiteId: string, params?: Record<string,
   const { modified } = useModified(`sessions`);
   const { startAt, endAt, unit, timezone } = useDateParameters();
   const filters = useFilterParameters();
+  const refetchInterval = useLiveRefetch();
 
   return useQuery({
+    refetchInterval,
     queryKey: [
       'sessions',
       { websiteId, modified, startAt, endAt, timezone, ...params, ...filters },

@@ -2,6 +2,7 @@ import type { UseQueryOptions } from '@tanstack/react-query';
 import { useDateParameters } from '@/components/hooks/useDateParameters';
 import { useApi } from '../useApi';
 import { useFilterParameters } from '../useFilterParameters';
+import { useLiveRefetch } from '../useLiveRefetch';
 
 export interface WebsiteStatsData {
   pageviews: number;
@@ -25,11 +26,13 @@ export function useWebsiteStatsQuery(
   const { get, useQuery } = useApi();
   const { startAt, endAt } = useDateParameters();
   const filters = useFilterParameters();
+  const refetchInterval = useLiveRefetch();
 
   return useQuery<WebsiteStatsData>({
     queryKey: ['websites:stats', { websiteId, compare, startAt, endAt, ...filters }],
     queryFn: () => get(`/websites/${websiteId}/stats`, { compare, startAt, endAt, ...filters }),
     enabled: !!websiteId,
+    refetchInterval,
     ...options,
   });
 }
