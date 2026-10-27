@@ -445,7 +445,7 @@
   },
   "message": {
     "action-confirmation": "Введите {confirmation} в поле ниже, чтобы подтвердить.",
-    "active-users": "{x} текущих посетителей",
+    "active-users": "{x} {x, plural, one {текущий посетитель} few {текущих посетителя} many {текущих посетителей} other {текущих посетителей}}",
     "bad-request": "Неверный запрос",
     "collected-data": "Собранные данные",
     "confirm-delete": "Вы уверены, что хотите удалить {target}?",
