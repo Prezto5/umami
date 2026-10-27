@@ -1,10 +1,12 @@
 import { Button, Column, Icon, Row, Text, Tooltip, TooltipTrigger } from '@umami/react-zen';
 import { useSpring, useTransform } from 'motion/react';
-import { type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, useRef } from 'react';
 import { AnimatedDiv } from '@/components/common/AnimatedDiv';
 import { Info } from '@/components/icons';
 import { ChangeLabel } from '@/components/metrics/ChangeLabel';
+import { useFitValue } from '@/components/metrics/useFitValue';
 import { formatNumber } from '@/lib/format';
+import styles from './MetricCard.module.css';
 
 export interface MetricCardProps {
   value: number;
@@ -36,6 +38,9 @@ export const MetricCard = ({
   const pctSpring = useSpring(0, { stiffness: 170, damping: 26 });
   const valueText = useTransform(xSpring, n => formatValue(n));
   const pctText = useTransform(pctSpring, n => `${Math.abs(~~n)}%`);
+  const valueRef = useRef<HTMLDivElement>(null);
+
+  useFitValue(valueRef);
 
   useEffect(() => {
     xSpring.set(x);
@@ -54,6 +59,7 @@ export const MetricCard = ({
       backgroundColor="surface"
       border
       gap="4"
+      className={styles.card}
     >
       {showLabel && (
         <Row justifyContent="space-between" alignItems="flex-start">
@@ -73,7 +79,9 @@ export const MetricCard = ({
         </Row>
       )}
       <Text size="4xl" weight="bold" wrap="nowrap">
-        <AnimatedDiv title={value?.toString()}>{valueText}</AnimatedDiv>
+        <AnimatedDiv ref={valueRef} className={styles.value} title={value?.toString()}>
+          {valueText}
+        </AnimatedDiv>
       </Text>
       {showChange && (
         <ChangeLabel value={change} title={formatValue(change)} reverseColors={reverseColors}>

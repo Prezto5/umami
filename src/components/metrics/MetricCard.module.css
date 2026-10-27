@@ -1,0 +1,13 @@
+/* The card is a size container, so cqi is the width of its content box. */
+.card {
+  container-type: inline-size;
+}
+
+/*
+ * The value is as large as its parent (1em) while it fits. When the text is wider than the card,
+ * the font shrinks by exactly the missing width: size = card width / text width in em.
+ * --fit-em (text width divided by its font size) is set by useFitValue; the fallback keeps 1em.
+ */
+.value {
+  font-size: min(1em, calc(100cqi / var(--fit-em, 1)));
+}
