@@ -3,7 +3,6 @@ import { useShare } from '@/components/hooks';
 import { ExportButton } from '@/components/input/ExportButton';
 import { FilterBar } from '@/components/input/FilterBar';
 import { MonthFilter } from '@/components/input/MonthFilter';
-import { RefreshButton } from '@/components/input/RefreshButton';
 import { WebsiteDateFilter } from '@/components/input/WebsiteDateFilter';
 import { WebsiteFilterButton } from '@/components/input/WebsiteFilterButton';
 import { allowShareFilter } from '@/lib/share';
@@ -39,11 +38,6 @@ export function WebsiteControls({
         <Row alignItems="center" justifyContent={{ base: 'flex-start', md: 'flex-end' }}>
           {allowDateFilter && (
             <WebsiteDateFilter websiteId={websiteId} allowCompare={allowCompare} />
-          )}
-          {allowDateFilter && websiteId && (
-            <Row marginLeft="2">
-              <RefreshButton websiteId={websiteId} />
-            </Row>
           )}
           {allowDownload && <ExportButton websiteId={websiteId} />}
           {allowMonthFilter && <MonthFilter />}
